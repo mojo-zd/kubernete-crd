@@ -1,0 +1,34 @@
+apiVersion: wise2c.com/v1
+kind: Tenant
+metadata:
+  annotations:
+    description: 开发人员使用
+  name: developer
+spec:
+  uuid: 8747f974-4574-11e9-93aa-9801a7af158f
+  creator: 1
+  createAt: 1552630685
+  updateAt: 1552630717
+  quotas:
+    hard:
+      limits.cpu: "4000"
+      requests.cpu: "2000"
+      limits.memory: "100Gi"
+      requests.memory: "30Gi"
+      requests.storage: "20"
+      persistentvolumeclaims: "30"
+      configmaps: "100"
+      persistentvolumeclaims: "200"
+      pods: "30"
+      replicationcontrollers: "12"
+      resourcequotas: "23"
+      services: "33"
+      services.loadbalancers: "21"
+      services.nodeports: "98"
+      secrets: "88"
+    used:
+      limits.cpu: "200"
+      requests.cpu: "100"
+      limits.memory: "10Gi"
+      requests.memory: "3Gi"
+      requests.storage: "2"

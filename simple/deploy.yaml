@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    io.wise2c.com: "true"
+  name: crd
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  labels:
+    io.wise2c.tenant: 8747f974-4574-11e9-93aa-9801a7af158f
+  name: developer-quota
+  namespace: crd
+spec:
+  hard:
+    requests.cpu: 1
+    requests.memory: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: web
+    io.wise2c.service: web
+    io.wise2c.stack: crd
+  name: web
+  namespace: crd
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: web
+    io.wise2c.service: web
+    io.wise2c.stack: crd
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: web
+    io.wise2c.stack: crd
+    io.wise2c.service: web
+  name: web
+  namespace: crd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      io.wise2c.stack: crd
+      io.wise2c.service: web
+  template:
+    metadata:
+      labels:
+        app: web
+        io.wise2c.stack: crd
+        io.wise2c.service: web
+    spec:
+      containers:
+      - image: registry.cn-hangzhou.aliyuncs.com/mojo/nginx-with-dnsutils:v1.0
+        imagePullPolicy: Always
+        name: nginx
+        resources:
+          limits:
+            cpu: 1
+          requests:
+            cpu: 500m
+            memory: 1Gi

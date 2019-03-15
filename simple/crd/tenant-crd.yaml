@@ -1,0 +1,26 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: tenants.wise2c.com
+spec:
+  group: wise2c.com
+  version: v1
+  scope: Cluster
+  names:
+    plural: tenants
+    singular: tenant
+    kind: Tenant
+    shortNames:
+    - tn
+  validation:
+    openAPIV3Schema:
+      required:
+      - spec
+      properties:
+        spec:
+          properties:
+            uuid:
+              description: business uuid of tenant
+              type: string
+          required:
+          - uuid
